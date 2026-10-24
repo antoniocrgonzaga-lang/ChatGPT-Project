@@ -136,7 +136,7 @@ function haloGate(kit, c, ctx, o) {
   c.animate(() => {
     if (warned || gatePos.distanceTo(ctx.game.player.worldPosition) > ctx.game.rail.speed * 3.2) return;
     warned = true;
-    ctx.game.hud.warning('PORTÃO DE HALO — PASSE ENTRE AS BARRAS', 1.4);
+    ctx.game.hud.warning('HALO GATE — FLY BETWEEN THE BARS', 1.4);
     ctx.game.audio.play('warning');
   });
 }
@@ -221,7 +221,7 @@ function latticeBeams({ game }, axis) {
     const end = axis === 'h' ? f.localToWorld(40, lane, 0, new THREE.Vector3()) : f.localToWorld(lane, 30, 0, new THREE.Vector3());
     game.obstacles.fireBeam({ start, end, local: false, warn: 1.25, fire: 0.8, radius: 1.5, color: 0x7af0ff });
   });
-  game.hud.warning('FEIXES DA TRELIÇA!', 1.2);
+  game.hud.warning('LATTICE BEAMS!', 1.2);
   game.audio.play('telegraph');
 }
 
@@ -232,7 +232,7 @@ const lancer = (at, x, y, extra = {}) => ev(at, 'enemy', { enemy: 'prismLancer',
 export const Stage3 = {
   id: 3,
   name: 'SINGULARITY CROWN',
-  subtitle: 'Horizonte de eventos de Nyx',
+  subtitle: 'Nyx event horizon',
   seed: 3301,
   bossMusic: 'boss3',
   outro: 'cutscene', // Nyx collapses, then the warp tunnel leads to Stage 4
@@ -264,12 +264,12 @@ export const Stage3 = {
   },
 
   sections: [
-    { id: 'horizon', start: 0, end: S(1300), title: 'Borda de Nyx', speed: 46, fog: 0x06141e, chunk: horizonZone },
-    { id: 'crystals', start: S(1300), end: S(2900), title: 'Campo de cristais', warning: 'CRISTAIS À FRENTE — DESTRUA OU DESVIE', speed: 42, fog: 0x081a26, sky: { tint: 0xd0f0ff, intensity: 0.9 }, chunk: crystalField },
-    { id: 'gates', start: S(2900), end: S(4300), title: 'Portões de halo', speed: 46, fog: 0x0a1620, dust: 0xffe0a0, sky: { tint: 0xfff0d0, intensity: 1 }, chunk: haloGates },
-    { id: 'wells', start: S(4300), end: S(5700), title: 'Poços gravitacionais', warning: 'POÇOS GRAVITACIONAIS — RESISTA À ATRAÇÃO', speed: 40, fog: 0x060c1e, dust: 0xa0c0ff, sky: { tint: 0xa0c8ff, intensity: 0.8 }, chunk: wellsZone },
-    { id: 'lattice', start: S(5700), end: S(7000), title: 'Treliça do Soberano', warning: 'ALTA VELOCIDADE!', speed: 70, fog: 0x08202a, dust: 0xc8ffff, bloom: 1.1, sky: { tint: 0xc8ffff, intensity: 1.15 }, chunk: latticeTunnel },
-    { id: 'crown', start: S(7000), end: MAIN_LENGTH + 400, title: 'A Coroa', speed: 32, fog: 0x0a1418, sky: { tint: 0xffe0c0, intensity: 1.2 }, chunk: crownZone },
+    { id: 'horizon', start: 0, end: S(1300), title: 'Edge of Nyx', speed: 46, fog: 0x06141e, chunk: horizonZone },
+    { id: 'crystals', start: S(1300), end: S(2900), title: 'Crystal field', warning: 'CRYSTALS AHEAD — DESTROY OR DODGE', speed: 42, fog: 0x081a26, sky: { tint: 0xd0f0ff, intensity: 0.9 }, chunk: crystalField },
+    { id: 'gates', start: S(2900), end: S(4300), title: 'Halo gates', speed: 46, fog: 0x0a1620, dust: 0xffe0a0, sky: { tint: 0xfff0d0, intensity: 1 }, chunk: haloGates },
+    { id: 'wells', start: S(4300), end: S(5700), title: 'Gravity wells', warning: 'GRAVITY WELLS — RESIST THE PULL', speed: 40, fog: 0x060c1e, dust: 0xa0c0ff, sky: { tint: 0xa0c8ff, intensity: 0.8 }, chunk: wellsZone },
+    { id: 'lattice', start: S(5700), end: S(7000), title: 'Sovereign lattice', warning: 'HIGH SPEED!', speed: 70, fog: 0x08202a, dust: 0xc8ffff, bloom: 1.1, sky: { tint: 0xc8ffff, intensity: 1.15 }, chunk: latticeTunnel },
+    { id: 'crown', start: S(7000), end: MAIN_LENGTH + 400, title: 'The Crown', speed: 32, fog: 0x0a1418, sky: { tint: 0xffe0c0, intensity: 1.2 }, chunk: crownZone },
   ],
 
   events: [
@@ -279,7 +279,7 @@ export const Stage3 = {
     wave(350, 'scout', 'line', 5, { pattern: 'cross', side: -1, z: -90, y: 3, spacing: 6 }),
     ev(500, 'enemy', { enemy: 'interceptor', x: -8, y: 3, z: -260, opts: { entry: 'front' } }),
     ev(510, 'enemy', { enemy: 'interceptor', x: 8, y: -2, z: -260, opts: { entry: 'front' } }),
-    ev(650, 'warning', { text: 'NOVA ASSINATURA: PRISM LANCER', duration: 2.5 }),
+    ev(650, 'warning', { text: 'NEW SIGNATURE: PRISM LANCER', duration: 2.5 }),
     lancer(680, 0, 3),
     wave(850, 'scout', 'column', 5, { pattern: 'dive', x: 6, y: 16 }),
     ev(1000, 'enemy', { enemy: 'heavy', x: 0, y: 2, z: -260, opts: { drop: 'dualCannon' } }),
@@ -338,7 +338,7 @@ export const Stage3 = {
     ev(6800, 'powerup', { item: 'shield', x: 4 }),
     ev(6820, 'powerup', { item: 'rapidFire', x: -4 }),
 
-    ev(7000, 'warning', { text: 'ALERTA: O SOBERANO DO ECLIPSE DESPERTA', duration: 3 }),
+    ev(7000, 'warning', { text: 'WARNING: THE ECLIPSE SOVEREIGN AWAKENS', duration: 3 }),
     ev(7020, 'music', { intensity: 0 }),
     ev(7040, 'checkpoint'),
     ev(7100, 'boss'),
@@ -383,7 +383,7 @@ export const Stage3 = {
       if (_v.z < -260 || _v.z > 20) continue;
       if (!w.warned && _v.z > -200) {
         w.warned = true;
-        game.hud.warning('POÇO GRAVITACIONAL!', 1.2);
+        game.hud.warning('GRAVITY WELL!', 1.2);
         game.audio.play('warning');
       }
       if (Math.random() < 0.6) {

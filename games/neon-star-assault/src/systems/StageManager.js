@@ -219,13 +219,13 @@ export class StageManager {
     if (kind === 'alt') {
       this.eventIndex.alt = 0;
       const gained = game.score.add(SCORING.altRoute, false);
-      game.hud.banner('ROTA OCULTA', `Setor de alto risco · +${gained}`);
+      game.hud.banner('HIDDEN ROUTE', `High-risk sector · +${gained}`);
       game.audio.play('stageChange');
     } else if (kind === 'merge') {
       const events = this.stage.events;
       const mergeS = game.rail.alt.mergeS;
       while (this.eventIndex.main < events.length && events[this.eventIndex.main].at < mergeS) this.eventIndex.main++;
-      game.hud.sectionTitle('De volta à rota principal');
+      game.hud.sectionTitle('Back on the main route');
     }
   }
 
@@ -300,7 +300,7 @@ export class StageManager {
     game.rail.setSpeed(RAIL.bossSpeed, false, 0.8);
     game.boss = this.stage.createBoss(game);
     game.hud.showBoss(game.boss.name);
-    game.hud.warning('ALERTA — ALVO COLOSSAL SE APROXIMANDO', 3);
+    game.hud.warning('WARNING — COLOSSAL TARGET APPROACHING', 3);
     game.audio.play('alert');
     game.audio.playMusic(this.stage.bossMusic);
     game.audio.setMusicIntensity(1);

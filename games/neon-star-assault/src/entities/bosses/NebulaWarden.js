@@ -170,11 +170,11 @@ export class NebulaWarden extends Boss {
       this.game.effects.explosion(this.shieldPart.center, { size: 3, color: 0xb070ff, debris: false });
       this.game.effects.burst(this.shieldPart.center, { count: 60, color: 0xb070ff, speed: 20, life: 0.8, size: 1.4 });
       this.shieldPart.alive = false;
-      this.game.hud.warning('ESCUDO DESTRUÍDO — ATAQUE O NÚCLEO');
+      this.game.hud.warning('SHIELD DESTROYED — ATTACK THE CORE');
       this.timers.stream = 1.5;
       this.timers.mines = 3;
     } else if (n === 3) {
-      this.game.hud.warning('NÚCLEO EXPOSTO');
+      this.game.hud.warning('CORE EXPOSED');
       this.moveSpeed = 0.9;
       this.timers.beam = 2;
       this.timers.ring = 4;
@@ -271,7 +271,7 @@ export class NebulaWarden extends Boss {
         this.setShield(false);
         T.shield = this.cfg.shieldWindow;
         this.shieldOpenWindow = true;
-        this.game.hud.warning('JANELA NO ESCUDO!', 1.2);
+        this.game.hud.warning('SHIELD OPENING!', 1.2);
       }
     } else if (this.shieldOpenWindow && T.shield <= 0) {
       this.shieldOpenWindow = false;

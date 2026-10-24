@@ -118,7 +118,7 @@ export function instantiate(slots, materials) {
   const bySlot = {};
   for (const { slot, geometry } of slots) {
     const material = materials[slot];
-    if (!material) throw new Error(`Material não definido para o slot "${slot}"`);
+    if (!material) throw new Error(`No material defined for slot "${slot}"`);
     const mesh = new THREE.Mesh(geometry, material);
     mesh.name = slot;
     group.add(mesh);

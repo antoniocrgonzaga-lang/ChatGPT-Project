@@ -93,7 +93,7 @@ export class ScoreSystem {
       if (this.noDamageTimer >= SCORING.noDamageInterval) {
         this.noDamageTimer = 0;
         const gained = this.add(SCORING.noDamageBonus, false);
-        this.game.hud.toast(`SEM DANO +${gained}`, '#6dffb0');
+        this.game.hud.toast(`NO DAMAGE +${gained}`, '#6dffb0');
       }
     }
   }

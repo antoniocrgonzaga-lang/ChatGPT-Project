@@ -49,7 +49,7 @@ export class ContainmentGrid {
     outer.renderOrder = inner.renderOrder = 20;
     this.marker.position.set(cx, cy, -1);
     game.rig.add(this.marker);
-    game.hud.warning('GRADE DE CONTENÇÃO — VÁ PARA A CÉLULA VERDE', 1.6);
+    game.hud.warning('CONTAINMENT GRID — REACH THE GREEN CELL', 1.6);
     game.audio.play('telegraph');
   }
 

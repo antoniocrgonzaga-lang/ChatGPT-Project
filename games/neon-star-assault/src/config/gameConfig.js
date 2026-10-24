@@ -1,7 +1,7 @@
 // Central tuning file. Every gameplay / visual number that is worth tweaking lives here.
 
 export const GAME_TITLE = 'NEON STAR ASSAULT';
-export const GAME_SUBTITLE = 'Operação Véu Carmesim';
+export const GAME_SUBTITLE = 'Operation Crimson Veil';
 
 // ---------------------------------------------------------------- player
 export const PLAYER = {
@@ -28,7 +28,7 @@ export const PLAYER = {
 export const SHIPS = {
   lumen: {
     name: 'VX-9 LUMEN LANCE',
-    role: 'Interceptador ágil',
+    role: 'Agile interceptor',
     model: {
       url: 'assets/models/player_ship.glb',
       wingspan: 3.9, // world units the model is scaled to (hitbox is independent)
@@ -47,7 +47,7 @@ export const SHIPS = {
   },
   vx04: {
     name: 'VX-04 LANCE',
-    role: 'Caça pesado',
+    role: 'Heavy fighter',
     model: {
       url: 'assets/models/vx04.glb',
       wingspan: 4.3,
@@ -65,8 +65,8 @@ export const SHIPS = {
     },
   },
   carrasco: {
-    name: 'KZ-13 CARRASCO',
-    role: 'Artilharia pesada',
+    name: 'KZ-13 EXECUTIONER',
+    role: 'Heavy artillery',
     model: {
       url: 'assets/models/nave_pesada.glb',
       rotationY: Math.PI, // exported with the nose towards +Z
@@ -319,9 +319,9 @@ export const AUDIO = { master: 0.7, sfx: 0.85, music: 0.4, muted: false };
 
 // ---------------------------------------------------------------- difficulty
 export const DIFFICULTY = {
-  easy: { label: 'Fácil', enemyHp: 0.8, bulletSpeed: 0.85, fireRate: 0.7, bossHp: 0.8 },
+  easy: { label: 'Easy', enemyHp: 0.8, bulletSpeed: 0.85, fireRate: 0.7, bossHp: 0.8 },
   normal: { label: 'Normal', enemyHp: 1, bulletSpeed: 1, fireRate: 1, bossHp: 1 },
-  hard: { label: 'Difícil', enemyHp: 1.25, bulletSpeed: 1.15, fireRate: 1.35, bossHp: 1.2 },
+  hard: { label: 'Hard', enemyHp: 1.25, bulletSpeed: 1.15, fireRate: 1.35, bossHp: 1.2 },
 };
 export const DEFAULT_DIFFICULTY = 'normal';
 

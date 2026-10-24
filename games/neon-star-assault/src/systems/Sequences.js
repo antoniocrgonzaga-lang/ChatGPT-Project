@@ -55,10 +55,10 @@ export class PortalTransition {
     game.rail.setSpeed(20, false, 1.5);
     game.audio.setMusicIntensity(0);
     if (startInWarp) {
-      game.hud.banner('SALTO DIMENSIONAL', 'Rastreando a origem da frota…');
+      game.hud.banner('DIMENSIONAL JUMP', 'Tracking the origin of the fleet…');
       this.enterWarp();
     } else {
-      game.hud.banner('PORTAL DIMENSIONAL', 'Estabilizando rota de salto…');
+      game.hud.banner('DIMENSIONAL PORTAL', 'Stabilizing the jump route…');
     }
   }
 
@@ -149,7 +149,7 @@ export class EscapeSequence {
     game.rail.setSpeed(RAIL.escapeStartSpeed, false, 0.8);
     game.audio.playMusic('escape');
     game.audio.setMusicIntensity(2);
-    game.hud.banner('FUJA!', 'O planeta está entrando em colapso');
+    game.hud.banner('ESCAPE!', 'The planet is collapsing');
     game.audio.play('alert');
   }
 
@@ -232,7 +232,7 @@ export class EscapeSequence {
     const EG = OBSTACLES.escapeGirder;
     const obs = game.obstacles.add(g, { colliders: [{ type: 'box', node: beam }], damage: 1, hp: EG.hp, score: EG.score, dropChance: EG.dropChance });
     obs.explosionSize = 2.4;
-    game.hud.warning('ESTRUTURA DESABANDO!', 1);
+    game.hud.warning('STRUCTURE COLLAPSING!', 1);
   }
 
   dispose() {

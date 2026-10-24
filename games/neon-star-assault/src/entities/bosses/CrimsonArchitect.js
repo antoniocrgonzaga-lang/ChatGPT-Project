@@ -269,16 +269,16 @@ export class CrimsonArchitect extends Boss {
   onPhase(n) {
     const hud = this.game.hud;
     if (n === 2) {
-      hud.warning('TORRES DESTRUÍDAS — SENSORES EXPOSTOS');
+      hud.warning('TOWERS DESTROYED — SENSORS EXPOSED');
       this.timers.wall = 2.5;
       this.timers.beams = 5;
     } else if (n === 3) {
-      hud.warning('NÚCLEO PARCIALMENTE EXPOSTO');
+      hud.warning('CORE PARTIALLY EXPOSED');
       this.clearWalls();
       this.timers.attack = 2;
       this.timers.spawn = 4;
     } else if (n === 4) {
-      hud.warning('NÚCLEO TOTALMENTE EXPOSTO!');
+      hud.warning('CORE FULLY EXPOSED!');
       this.game.audio.setMusicIntensity(2);
       this.game.postfx.stageBloomFactor = 1.15;
       this.overload = { t: this.cfg.overloadCountdown, charging: false, chargeT: 0 };
@@ -503,7 +503,7 @@ export class CrimsonArchitect extends Boss {
       blocksShots: false,
     });
     this.walls.push(wall);
-    this.game.hud.warning('PAREDE SE FECHANDO!', 1.3);
+    this.game.hud.warning('WALL CLOSING IN!', 1.3);
     this.game.audio.play('warning');
   }
 
@@ -608,16 +608,16 @@ export class CrimsonArchitect extends Boss {
     if (!o) return;
     if (!o.charging) {
       o.t -= dt;
-      this.game.hud.setCountdown(`SOBRECARGA DO NÚCLEO`, Math.max(0, o.t));
+      this.game.hud.setCountdown(`CORE OVERLOAD`, Math.max(0, o.t));
       if (o.t <= 0) {
         o.charging = true;
         o.chargeT = 0;
-        this.game.hud.warning('ATAQUE FINAL — ESQUIVE (SHIFT)!', 2.4);
+        this.game.hud.warning('FINAL ATTACK — DODGE (SHIFT)!', 2.4);
         this.game.audio.play('alert');
       }
     } else {
       o.chargeT += dt / 2.5;
-      this.game.hud.setCountdown('ESQUIVE AGORA!', Math.max(0, 2.5 - o.chargeT * 2.5));
+      this.game.hud.setCountdown('DODGE NOW!', Math.max(0, 2.5 - o.chargeT * 2.5));
       this.game.cameraRig.shake(0.05 + o.chargeT * 0.1);
       if (o.chargeT >= 1) {
         this.overloadBlast();
@@ -639,7 +639,7 @@ export class CrimsonArchitect extends Boss {
     game.effects.shockwave(_v, { radius: 120, duration: 1, color: 0xffd0a0 });
     const p = game.player;
     if (p.isDodging || p.dodgeInvuln > 0) {
-      game.hud.toast('ESQUIVA PERFEITA!', '#6dffb0');
+      game.hud.toast('PERFECT DODGE!', '#6dffb0');
       game.addScore(5000, p.worldPosition);
     } else {
       p.hit(2);

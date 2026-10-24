@@ -239,7 +239,7 @@ function trenchBridge(kit, c, ctx, o) {
   const obs = ctx.game.obstacles.add(g, { colliders: [{ type: 'box', node: beam }], damage: 1, hp: B.hp, score: B.score, dropChance: B.dropChance });
   obs.explosionSize = 2.4;
   obs.explosionColor = 0x8affb0;
-  warnOnce(c, ctx, g.position, 'PASSARELA À FRENTE — PASSE POR CIMA OU POR BAIXO');
+  warnOnce(c, ctx, g.position, 'BRIDGE AHEAD — FLY ABOVE OR BELOW');
 }
 
 function trenchPylons(kit, c, ctx, o) {
@@ -257,7 +257,7 @@ function trenchPylons(kit, c, ctx, o) {
     g.add(collider);
     ctx.game.obstacles.add(g, { colliders: [{ type: 'box', node: collider }], damage: 1 });
   }
-  warnOnce(c, ctx, c.at(o, 0, 0, 0, new THREE.Vector3()), 'PILARES NA TRINCHEIRA — DESVIE!');
+  warnOnce(c, ctx, c.at(o, 0, 0, 0, new THREE.Vector3()), 'TRENCH PYLONS — DODGE!');
 }
 
 function warnOnce(c, ctx, pos, text) {
@@ -311,7 +311,7 @@ function hangarDoor(kit, c, ctx, o) {
     glow.material.opacity = 0.2 + open * 0.5;
     if (!announced && dist < 380) {
       announced = true;
-      ctx.game.hud.warning('COMPORTAS DO HANGAR ABRINDO', 2);
+      ctx.game.hud.warning('HANGAR DOORS OPENING', 2);
       ctx.game.audio.play('warning');
     }
   });
@@ -421,7 +421,7 @@ function cargoCrane(kit, c, ctx, o) {
       }
       if (!warned && dist < ctx.game.rail.speed * 3.6) {
         warned = true;
-        ctx.game.hud.warning('CARGA EM MOVIMENTO!', 1.3);
+        ctx.game.hud.warning('MOVING CARGO!', 1.3);
         ctx.game.audio.play('warning');
       }
     },
@@ -569,7 +569,7 @@ function broadside({ game, state }, side) {
     // muzzle flashes along the cruiser's inner flank
     ship.hardpoints.forEach((h, k) => h.side === -side && game.effects.flash(ship.hardpointWorld(k, _w), 14, 0.5, 0x8aff3a, 1.5));
   }
-  game.hud.warning(side < 0 ? 'SALVA DO CRUZADOR — BOMBORDO!' : 'SALVA DO CRUZADOR — ESTIBORDO!', 1.4);
+  game.hud.warning(side < 0 ? 'CRUISER SALVO — PORT SIDE!' : 'CRUISER SALVO — STARBOARD SIDE!', 1.4);
   game.audio.play('telegraph');
 }
 
@@ -604,12 +604,12 @@ const salvo = (at, side) => ev(at, 'custom', { run: (ctx) => broadside(ctx, side
 export const Stage4 = {
   id: 4,
   name: 'ABYSSAL ARMADA',
-  subtitle: 'Nave-mãe Leviatã · Espaço profundo',
+  subtitle: 'Leviathan mothership · Deep space',
   seed: 4417,
   bossMusic: 'boss4',
   outro: 'final',
   ending: 'mothership',
-  victory: 'A Abyssal Matriarch caiu e a Leviatã se partiu no vazio. A armada não existe mais.',
+  victory: 'The Abyssal Matriarch has fallen and the Leviathan has shattered in the void. The armada is no more.',
   buildPath,
   createBoss: (game) => new AbyssalMatriarch(game),
   theme: {
@@ -637,19 +637,19 @@ export const Stage4 = {
   },
 
   sections: [
-    { id: 'void', start: 0, end: S(1400), title: 'O Vazio', speed: 48, fog: 0x02040a, chunk: voidZone },
-    { id: 'armada', start: S(1400), end: S(3500), title: 'A Armada', warning: 'ARMADA INIMIGA — CUIDADO COM AS SALVAS', speed: 46, fog: 0x030610, sky: { tint: 0xe0e8ff, intensity: 0.95 }, chunk: armadaZone },
-    { id: 'shadow', start: S(3500), end: HULL_S, title: 'A Sombra da Leviatã', warning: 'A NAVE-MÃE LEVIATÃ', speed: 44, fog: 0x02050a, dust: 0xa8ffd0, sky: { tint: 0xc8d4ff, intensity: 0.75 }, chunk: shadowZone },
-    { id: 'hull', start: HULL_S, end: DOOR_S, title: 'Casco da Leviatã', warning: 'VOO RASANTE — ENTRE NA TRINCHEIRA', speed: 52, fog: 0x050b10, dust: 0xd0ffe0, bloom: 1.05, sky: { tint: 0xffffff, intensity: 1.05 }, chunk: hullZone },
-    { id: 'hangar', start: DOOR_S, end: S(7500), title: 'Hangar da Leviatã', warning: 'DENTRO DA NAVE-MÃE', speed: 40, fog: 0x040a0a, dust: 0xb0ffd0, chunk: hangarZone },
-    { id: 'conduit', start: S(7500), end: S(8700), title: 'Conduto do núcleo', warning: 'ALTA VELOCIDADE!', speed: 72, fog: 0x041008, dust: 0x4a8a6a, bloom: 1.05, chunk: conduitZone },
-    { id: 'heart', start: S(8700), end: MAIN_LENGTH + 400, title: 'Coração da Leviatã', speed: 30, fog: 0x030a08, bloom: 1.1, chunk: heartZone },
+    { id: 'void', start: 0, end: S(1400), title: 'The Void', speed: 48, fog: 0x02040a, chunk: voidZone },
+    { id: 'armada', start: S(1400), end: S(3500), title: 'The Armada', warning: 'ENEMY ARMADA — WATCH FOR SALVOS', speed: 46, fog: 0x030610, sky: { tint: 0xe0e8ff, intensity: 0.95 }, chunk: armadaZone },
+    { id: 'shadow', start: S(3500), end: HULL_S, title: 'Shadow of the Leviathan', warning: 'THE LEVIATHAN MOTHERSHIP', speed: 44, fog: 0x02050a, dust: 0xa8ffd0, sky: { tint: 0xc8d4ff, intensity: 0.75 }, chunk: shadowZone },
+    { id: 'hull', start: HULL_S, end: DOOR_S, title: 'Leviathan hull', warning: 'LOW FLIGHT — ENTER THE TRENCH', speed: 52, fog: 0x050b10, dust: 0xd0ffe0, bloom: 1.05, sky: { tint: 0xffffff, intensity: 1.05 }, chunk: hullZone },
+    { id: 'hangar', start: DOOR_S, end: S(7500), title: 'Leviathan hangar', warning: 'INSIDE THE MOTHERSHIP', speed: 40, fog: 0x040a0a, dust: 0xb0ffd0, chunk: hangarZone },
+    { id: 'conduit', start: S(7500), end: S(8700), title: 'Core conduit', warning: 'HIGH SPEED!', speed: 72, fog: 0x041008, dust: 0x4a8a6a, bloom: 1.05, chunk: conduitZone },
+    { id: 'heart', start: S(8700), end: MAIN_LENGTH + 400, title: 'Heart of the Leviathan', speed: 30, fog: 0x030a08, bloom: 1.1, chunk: heartZone },
   ],
 
   events: [
     ev(0, 'music', { track: 'stage4', intensity: 0, persistent: true }),
     ev(0, 'banner', { title: 'STAGE 4', subtitle: 'ABYSSAL ARMADA' }),
-    ev(260, 'warning', { text: 'FORA DA GALÁXIA — ESPAÇO PROFUNDO', duration: 2.5 }),
+    ev(260, 'warning', { text: 'BEYOND THE GALAXY — DEEP SPACE', duration: 2.5 }),
     wave(330, 'scout', 'V', 5, { pattern: 'swoop' }),
     ev(420, 'music', { intensity: 1 }),
     wave(560, 'scout', 'line', 5, { pattern: 'cross', side: 1, z: -90, y: 2, spacing: 6 }),
@@ -722,7 +722,7 @@ export const Stage4 = {
     ev(8420, 'powerup', { item: 'shield', x: -3 }),
     ev(8440, 'powerup', { item: 'repair', x: 3 }),
 
-    ev(8700, 'warning', { text: 'O CORAÇÃO DA LEVIATÃ — ABYSSAL MATRIARCH', duration: 3 }),
+    ev(8700, 'warning', { text: 'HEART OF THE LEVIATHAN — ABYSSAL MATRIARCH', duration: 3 }),
     ev(8720, 'music', { intensity: 0 }),
     ev(8740, 'checkpoint'),
     ev(8800, 'boss'),

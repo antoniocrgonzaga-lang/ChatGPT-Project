@@ -2,24 +2,24 @@ import { GAME_TITLE, GAME_SUBTITLE, QUALITY, DIFFICULTY, SHIPS, MAX_SHIP_HP, WEA
 import { formatScore } from '../utils/math.js';
 
 const CONTROLS = [
-  ['WASD / Setas', 'Mover a nave'],
-  ['Espaço (segurar)', 'Disparo principal contínuo'],
-  ['C / J (segurar)', 'Carregar tiro especial (solte para disparar)'],
-  ['Shift', 'Esquiva rápida (invulnerável por um instante)'],
-  ['E', 'Bomba de energia'],
-  ['P / Esc', 'Pausar'],
-  ['Enter', 'Iniciar / reiniciar'],
-  ['M', 'Silenciar áudio'],
-  ['Gamepad', 'Analógico move · A atira · RT/LT carrega · B/RB/LB esquiva · X/Y bomba · Start pausa'],
+  ['WASD / Arrow keys', 'Move the ship'],
+  ['Space (hold)', 'Continuous primary fire'],
+  ['C / J (hold)', 'Charge a special shot (release to fire)'],
+  ['Shift', 'Quick dodge (brief invulnerability)'],
+  ['E', 'Energy bomb'],
+  ['P / Esc', 'Pause'],
+  ['Enter', 'Start / restart'],
+  ['M', 'Mute audio'],
+  ['Gamepad', 'Stick moves · A fires · RT/LT charges · B/RB/LB dodges · X/Y drops a bomb · Start pauses'],
 ];
 
 const POWERUP_INFO = [
-  ['R', '#33e6ff', 'Rapid Fire', 'cadência de tiro maior até perder a vida'],
-  ['D', '#ff9a2e', 'Dual Cannon', 'ativa os canhões das asas até perder a vida'],
-  ['S', '#5b8cff', 'Shield', 'absorve um impacto'],
-  ['+', '#3dff8a', 'Repair Core', 'recupera 1 ponto de casco'],
-  ['B', '#ff3dd8', 'Energy Bomb', '+1 bomba'],
-  ['×2', '#ffd23d', 'Score Multiplier', 'pontuação dobrada por 15 s'],
+  ['R', '#33e6ff', 'Rapid Fire', 'increases fire rate until you lose a life'],
+  ['D', '#ff9a2e', 'Dual Cannon', 'activates wing cannons until you lose a life'],
+  ['S', '#5b8cff', 'Shield', 'absorbs one hit'],
+  ['+', '#3dff8a', 'Repair Core', 'restores 1 hull block'],
+  ['B', '#ff3dd8', 'Energy Bomb', '+1 bomb'],
+  ['×2', '#ffd23d', 'Score Multiplier', 'doubles your score for 15 seconds'],
 ];
 
 /** Full-screen overlay screens (loading, title, instructions, pause, game over, victory). */
@@ -59,29 +59,29 @@ export class Screens {
   showLoading() {
     this.mount('loading', `${this.titleBlock()}
       <div class="loading-bar"><div class="fill"></div></div>
-      <div class="loading-label">Inicializando…</div>`);
+      <div class="loading-label">Initializing…</div>`);
   }
 
   setLoadingProgress(p, label) {
     const fill = this.root.querySelector('.loading-bar .fill');
     if (fill) fill.style.transform = `scaleX(${p})`;
     const l = this.root.querySelector('.loading-label');
-    if (l && label) l.textContent = `Gerando ${label}…`;
+    if (l && label) l.textContent = `Generating ${label}…`;
   }
 
   // ------------------------------------------------------------ settings widgets
   settingsHtml(settings, { quality = true } = {}) {
     const q = quality
-      ? `<div class="setting"><span>Qualidade</span><div class="seg">${Object.entries(QUALITY)
+      ? `<div class="setting"><span>Quality</span><div class="seg">${Object.entries(QUALITY)
           .map(([k, v]) => `<button data-action="onQuality" data-value="${k}" class="${settings.quality === k ? 'sel' : ''}">${v.label}</button>`)
           .join('')}</div></div>
-        <div class="setting"><span>Dificuldade</span><div class="seg">${Object.entries(DIFFICULTY)
+        <div class="setting"><span>Difficulty</span><div class="seg">${Object.entries(DIFFICULTY)
           .map(([k, v]) => `<button data-action="onDifficulty" data-value="${k}" class="${settings.difficulty === k ? 'sel' : ''}">${v.label}</button>`)
           .join('')}</div></div>`
       : '';
     return `<div class="settings">${q}
       <div class="setting"><span>Volume</span><input type="range" min="0" max="100" value="${Math.round(settings.volume * 100)}" class="volume">
-      <button data-action="onMute" class="mute ${settings.muted ? 'sel' : ''}">${settings.muted ? 'Som: OFF' : 'Som: ON'}</button></div>
+      <button data-action="onMute" class="mute ${settings.muted ? 'sel' : ''}">${settings.muted ? 'Sound: OFF' : 'Sound: ON'}</button></div>
     </div>`;
   }
 
@@ -106,9 +106,9 @@ export class Screens {
         return `<button class="ship-card ${id === selected ? 'sel' : ''}" data-action="onShip" data-value="${id}">
           <span class="ship-card-name">${ship.name}</span>
           <span class="ship-card-role">${ship.role}</span>
-          <span class="ship-card-stat"><span>CASCO</span>${meter(ship.stats.maxHp, MAX_SHIP_HP, 'blocks')}</span>
-          <span class="ship-card-stat"><span>AGILIDADE</span>${meter(agility, BARS)}</span>
-          <span class="ship-card-stat"><span>FOGO</span>${meter(fire, BARS)}</span>
+          <span class="ship-card-stat"><span>HULL</span>${meter(ship.stats.maxHp, MAX_SHIP_HP, 'blocks')}</span>
+          <span class="ship-card-stat"><span>AGILITY</span>${meter(agility, BARS)}</span>
+          <span class="ship-card-stat"><span>FIREPOWER</span>${meter(fire, BARS)}</span>
         </button>`;
       })
       .join('');
@@ -119,46 +119,46 @@ export class Screens {
     const screen = this.mount('title', `${this.titleBlock()}
       ${this.shipSelectHtml(settings.ship)}
       <div class="menu">
-        <button class="primary" data-action="onStart">▶ INICIAR</button>
-        <button data-action="onInstructions">INSTRUÇÕES</button>
+        <button class="primary" data-action="onStart">▶ START</button>
+        <button data-action="onInstructions">INSTRUCTIONS</button>
       </div>
       ${this.settingsHtml(settings)}
-      <div class="hint"><b>←</b> / <b>→</b> escolhe a nave · <b>Enter</b> para começar</div>
+      <div class="hint"><b>←</b> / <b>→</b> selects your ship · <b>Enter</b> to start</div>
       ${warnings.length ? `<div class="warn-list">${warnings.map((w) => `<div>⚠ ${w}</div>`).join('')}</div>` : ''}`);
     this.bindVolume(screen);
   }
 
   showInstructions() {
-    this.mount('instructions', `<h2>INSTRUÇÕES</h2>
+    this.mount('instructions', `<h2>INSTRUCTIONS</h2>
       <div class="cols">
-        <div><h3>Controles</h3><table>${CONTROLS.map(([k, v]) => `<tr><td class="key">${k}</td><td>${v}</td></tr>`).join('')}</table></div>
+        <div><h3>Controls</h3><table>${CONTROLS.map(([k, v]) => `<tr><td class="key">${k}</td><td>${v}</td></tr>`).join('')}</table></div>
         <div><h3>Power-ups</h3><table>${POWERUP_INFO.map(([i, c, n, d]) => `<tr><td class="pu" style="color:${c}">${i}</td><td><b style="color:${c}">${n}</b> — ${d}</td></tr>`).join('')}</table>
-        <h3>Dicas</h3><ul>
-          <li>Você tem <b>3 vidas</b>; cada vida tem 3 ou 4 blocos de casco, conforme a nave escolhida (cada nave também tem agilidade e poder de fogo próprios). Ao perder uma vida, Rapid Fire e Dual Cannon são perdidos.</li>
-          <li>A cada <b>10 000 pontos</b> o casco recupera 1 bloco; a cada <b>50 000</b> você ganha uma vida extra.</li>
-          <li>Asteroides, vigas e destroços podem ser destruídos com alguns tiros e às vezes soltam power-ups.</li>
-          <li>Destrua inimigos em sequência para subir o multiplicador (até x8). Receber dano zera o combo.</li>
-          <li>O tiro carregado persegue o alvo marcado e causa dano em área.</li>
-          <li>A esquiva atravessa projéteis e o ataque final do último chefe.</li>
-          <li>No Stage 1, destrua os <b>3 geradores</b> antes da barreira para abrir a rota oculta.</li>
-          <li>No Stage 3, mova-se contra a atração dos <b>poços gravitacionais</b> e destrua os Prism Lancers enquanto carregam.</li>
-          <li>No Stage 4, as <b>grades de contenção</b> deixam uma única célula livre, marcada em verde: chegue até ela antes do disparo.</li>
-          <li>Linhas e contornos vermelhos piscando indicam onde um ataque vai acontecer.</li>
+        <h3>Tips</h3><ul>
+          <li>You have <b>3 lives</b>, with 3 or 4 hull blocks per life depending on your ship. Each ship has its own agility and firepower. Rapid Fire and Dual Cannon are lost when your ship is destroyed.</li>
+          <li>Every <b>10,000 points</b> restores 1 hull block; every <b>50,000 points</b> grants an extra life.</li>
+          <li>Asteroids, girders and debris can be destroyed with a few shots and sometimes drop power-ups.</li>
+          <li>Destroy enemies in a chain to raise your multiplier (up to x8). Taking damage resets your combo.</li>
+          <li>Charged shots track the locked target and deal area damage.</li>
+          <li>Dodging lets you pass through projectiles and the final attack of the last boss.</li>
+          <li>In Stage 1, destroy the <b>3 generators</b> before the barrier to unlock the hidden route.</li>
+          <li>In Stage 3, steer against the pull of <b>gravity wells</b> and destroy Prism Lancers while they charge.</li>
+          <li>In Stage 4, <b>containment grids</b> leave one safe cell marked in green. Reach it before the beams fire.</li>
+          <li>Flashing red lines and outlines show where an attack will strike.</li>
         </ul></div>
       </div>
-      <div class="menu"><button class="primary" data-action="onBack">VOLTAR</button></div>`);
+      <div class="menu"><button class="primary" data-action="onBack">BACK</button></div>`);
   }
 
   // ------------------------------------------------------------ in game
   showPause(settings) {
-    const screen = this.mount('pause', `<h2>PAUSA</h2>
+    const screen = this.mount('pause', `<h2>PAUSED</h2>
       <div class="menu">
-        <button class="primary" data-action="onResume">CONTINUAR</button>
-        <button data-action="onRestartStage">REINICIAR ESTÁGIO</button>
-        <button data-action="onMenu">MENU PRINCIPAL</button>
+        <button class="primary" data-action="onResume">RESUME</button>
+        <button data-action="onRestartStage">RESTART STAGE</button>
+        <button data-action="onMenu">MAIN MENU</button>
       </div>
       ${this.settingsHtml(settings, { quality: false })}
-      <div class="hint">P / Esc para continuar</div>`);
+      <div class="hint">P / Esc to resume</div>`);
     this.bindVolume(screen);
   }
 
@@ -166,24 +166,24 @@ export class Screens {
     this.mount('gameover', `<h2 class="bad">GAME OVER</h2>
       <div class="final-score">${formatScore(data.score)}</div>
       <div class="menu">
-        <button class="primary" data-action="onContinue">CONTINUAR DO CHECKPOINT</button>
-        <button data-action="onMenu">MENU PRINCIPAL</button>
+        <button class="primary" data-action="onContinue">CONTINUE FROM CHECKPOINT</button>
+        <button data-action="onMenu">MAIN MENU</button>
       </div>
-      <div class="hint">Enter: continuar (pontuação reiniciada no checkpoint) · Esc: menu</div>`);
+      <div class="hint">Enter: continue (score resets to the checkpoint) · Esc: menu</div>`);
   }
 
   showVictory(data) {
     const rows = data.breakdown.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
-    this.mount('victory', `<h2 class="good">MISSÃO CUMPRIDA</h2>
-      <div class="sub">${data.subtitle ?? 'A frota inimiga foi derrotada. O setor está livre.'}</div>
+    this.mount('victory', `<h2 class="good">MISSION ACCOMPLISHED</h2>
+      <div class="sub">${data.subtitle ?? 'The enemy fleet has been defeated. The sector is clear.'}</div>
       <div class="final-score">${formatScore(data.score)}</div>
       <table class="breakdown">${rows}</table>
-      <div class="menu"><button class="primary" data-action="onStart">JOGAR NOVAMENTE</button><button data-action="onMenu">MENU PRINCIPAL</button></div>
-      <div class="hint">Enter: jogar novamente</div>`);
+      <div class="menu"><button class="primary" data-action="onStart">PLAY AGAIN</button><button data-action="onMenu">MAIN MENU</button></div>
+      <div class="hint">Enter: play again</div>`);
   }
 
   showFatal(message) {
-    this.mount('fatal', `${this.titleBlock()}<h2 class="bad">Não foi possível iniciar</h2><p>${message}</p>
-      <p class="hint">Verifique se o navegador suporta WebGL e se o jogo está sendo servido por um servidor local (npm run dev ou Live Server).</p>`);
+    this.mount('fatal', `${this.titleBlock()}<h2 class="bad">Unable to start</h2><p>${message}</p>
+      <p class="hint">Make sure your browser supports WebGL and open the game over HTTP or HTTPS (for local play, use npm run dev or Live Server).</p>`);
   }
 }

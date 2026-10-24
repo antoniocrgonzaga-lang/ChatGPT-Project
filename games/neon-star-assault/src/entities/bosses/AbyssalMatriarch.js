@@ -211,11 +211,11 @@ export class AbyssalMatriarch extends Boss {
       this.shieldPart.collidable = false;
       this.shieldCollapse = 1;
       game.effects.shockwave(this.coreGroup.getWorldPosition(_v), { radius: 26, duration: 0.7, color: 0x8affb0 });
-      game.hud.warning('ESCUDO DESATIVADO — DESTRUA OS NÓS DAS PÉTALAS', 2.6);
+      game.hud.warning('SHIELD DISABLED — DESTROY THE PETAL NODES', 2.6);
       this.timers.grid = 2.5;
       this.timers.fan = 1.5;
     } else if (n === 3) {
-      game.hud.warning('NÚCLEO DA MATRIARCA EXPOSTO!', 3);
+      game.hud.warning('MATRIARCH CORE EXPOSED!', 3);
       game.audio.setMusicIntensity(2);
       game.postfx.stageBloomFactor = 1.2;
       this.timers.grid = 4;

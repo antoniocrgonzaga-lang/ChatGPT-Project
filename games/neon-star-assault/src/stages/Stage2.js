@@ -262,7 +262,7 @@ function tunnelFan(kit, c, ctx, o) {
     _rel.subVectors(fanPos, ctx.game.player.worldPosition);
     if (_rel.length() < ctx.game.rail.speed * 3.2) {
       warned = true;
-      ctx.game.hud.warning('HÉLICE À FRENTE — PASSE ENTRE AS PÁS', 1.4);
+      ctx.game.hud.warning('FAN AHEAD — FLY BETWEEN THE BLADES', 1.4);
       ctx.game.audio.play('warning');
     }
   });
@@ -384,7 +384,7 @@ function closingDoor(kit, c, ctx, o) {
       outline.visible = k < 1 && Math.sin(ctx.game.time * 14) > -0.3;
       if (!warned && dist < speed * 3) {
         warned = true;
-        ctx.game.hud.warning('PORTA SE FECHANDO — MIRE NA ABERTURA', 1.3);
+        ctx.game.hud.warning('DOOR CLOSING — AIM FOR THE GAP', 1.3);
         ctx.game.audio.play('warning');
       }
     },
@@ -419,7 +419,7 @@ function towerBeams({ game }, axis) {
     const end = axis === 'h' ? f.localToWorld(50, lane, 0, new THREE.Vector3()) : f.localToWorld(lane, 40, 0, new THREE.Vector3());
     game.obstacles.fireBeam({ start, end, local: false, warn: 1.3, fire: 0.8, radius: 1.6, color: 0xff3a1a });
   });
-  game.hud.warning(axis === 'h' ? 'FEIXES HORIZONTAIS!' : 'FEIXES VERTICAIS!', 1.2);
+  game.hud.warning(axis === 'h' ? 'HORIZONTAL BEAMS!' : 'VERTICAL BEAMS!', 1.2);
   game.audio.play('telegraph');
 }
 
@@ -430,7 +430,7 @@ const hunter = (at, x, y, extra = {}) => ev(at, 'enemy', { enemy: 'phaseHunter',
 export const Stage2 = {
   id: 2,
   name: 'CRIMSON MACHINE WORLD',
-  subtitle: 'Planeta artificial Kharon-9',
+  subtitle: 'Artificial planet Kharon-9',
   seed: 2903,
   bossMusic: 'boss2',
   outro: 'escape', // boss -> 30 s escape -> planet explosion cutscene -> next stage
@@ -460,14 +460,14 @@ export const Stage2 = {
   },
 
   sections: [
-    { id: 'orbit', start: 0, end: S(1300), title: 'Aproximação orbital', speed: 52, fog: 0x2a0c08, chunk: orbitApproach },
-    { id: 'surface', start: S(1300), end: S(2800), title: 'Superfície de Kharon-9', warning: 'DEFESAS DE SUPERFÍCIE ATIVAS', speed: 50, fog: 0x2a0d06, chunk: surfaceCombat },
-    { id: 'towers', start: S(2800), end: S(4100), title: 'Floresta de torres', warning: 'TORRES NO CAMINHO — DESVIE!', speed: 46, fog: 0x301006, chunk: towerForest },
-    { id: 'opening', start: S(4100), end: S(4750), title: 'Abertura mecânica', warning: 'ENTRANDO NO PLANETA', speed: 42, fog: 0x1c0804, chunk: mechanicalOpening },
-    { id: 'tunnel', start: S(4750), end: S(6200), title: 'Túnel interno', warning: 'ALTA VELOCIDADE!', speed: 74, fog: 0x200604, dust: 0xffc080, bloom: 1.1, chunk: innerTunnel },
-    { id: 'reactor', start: S(6200), end: S(7400), title: 'Sala dos reatores', speed: 46, fog: 0x2c1004, dust: 0xffd080, bloom: 1.15, chunk: reactorRoom },
-    { id: 'corridor', start: S(7400), end: S(8800), title: 'Corredor de defesa', warning: 'PORTAS DE SEGURANÇA ATIVAS', speed: 44, fog: 0x1e0404, chunk: defenseCorridor },
-    { id: 'arena', start: S(8800), end: MAIN_LENGTH + 400, title: 'Núcleo do Arquiteto', speed: 30, fog: 0x260804, chunk: bossChamber },
+    { id: 'orbit', start: 0, end: S(1300), title: 'Orbital approach', speed: 52, fog: 0x2a0c08, chunk: orbitApproach },
+    { id: 'surface', start: S(1300), end: S(2800), title: 'Kharon-9 surface', warning: 'SURFACE DEFENSES ACTIVE', speed: 50, fog: 0x2a0d06, chunk: surfaceCombat },
+    { id: 'towers', start: S(2800), end: S(4100), title: 'Tower forest', warning: 'TOWERS AHEAD — DODGE!', speed: 46, fog: 0x301006, chunk: towerForest },
+    { id: 'opening', start: S(4100), end: S(4750), title: 'Mechanical opening', warning: 'ENTERING THE PLANET', speed: 42, fog: 0x1c0804, chunk: mechanicalOpening },
+    { id: 'tunnel', start: S(4750), end: S(6200), title: 'Inner tunnel', warning: 'HIGH SPEED!', speed: 74, fog: 0x200604, dust: 0xffc080, bloom: 1.1, chunk: innerTunnel },
+    { id: 'reactor', start: S(6200), end: S(7400), title: 'Reactor room', speed: 46, fog: 0x2c1004, dust: 0xffd080, bloom: 1.15, chunk: reactorRoom },
+    { id: 'corridor', start: S(7400), end: S(8800), title: 'Defense corridor', warning: 'SECURITY DOORS ACTIVE', speed: 44, fog: 0x1e0404, chunk: defenseCorridor },
+    { id: 'arena', start: S(8800), end: MAIN_LENGTH + 400, title: 'Architect core', speed: 30, fog: 0x260804, chunk: bossChamber },
   ],
   // activated by the escape sequence from wherever the boss fight ended
   escapeSection: { id: 'escape', start: 0, end: Infinity, fog: 0x3a1004, dust: 0xffb060, bloom: 1.2, chunk: escapeTunnel },
@@ -479,7 +479,7 @@ export const Stage2 = {
     ev(350, 'enemy', { enemy: 'interceptor', x: -8, y: 3, z: -260, opts: { entry: 'front' } }),
     ev(360, 'enemy', { enemy: 'interceptor', x: 8, y: -2, z: -260, opts: { entry: 'front' } }),
     ev(500, 'turrets', { ahead: 320, list: [{ x: -16, y: -8 }, { x: 16, y: -8, dz: 50 }] }),
-    ev(650, 'warning', { text: 'NOVA ASSINATURA: PHASE HUNTER', duration: 2.5 }),
+    ev(650, 'warning', { text: 'NEW SIGNATURE: PHASE HUNTER', duration: 2.5 }),
     hunter(680, 0, 3),
     wave(850, 'scout', 'line', 5, { pattern: 'cross', side: 1, z: -90, y: 3, spacing: 6 }),
     ev(1000, 'enemy', { enemy: 'heavy', x: 0, y: 2, z: -260, opts: { drop: 'dualCannon' } }),
@@ -548,7 +548,7 @@ export const Stage2 = {
     ev(8500, 'powerup', { item: 'repair', x: -4 }),
     ev(8520, 'powerup', { item: 'shield', x: 4 }),
 
-    ev(8800, 'warning', { text: 'NÚCLEO DO PLANETA — THE CRIMSON ARCHITECT', duration: 3 }),
+    ev(8800, 'warning', { text: 'PLANET CORE — THE CRIMSON ARCHITECT', duration: 3 }),
     ev(8820, 'music', { intensity: 0 }),
     ev(8840, 'checkpoint'),
     ev(8900, 'boss'),

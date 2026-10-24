@@ -175,7 +175,7 @@ export class HUD {
   setBossPhase(phase, total) {
     let html = '';
     for (let i = 1; i <= total; i++) html += `<span class="${i < phase ? 'done' : i === phase ? 'active' : ''}">${i}</span>`;
-    this.bossPhases.innerHTML = `FASE ${html}`;
+    this.bossPhases.innerHTML = `PHASE ${html}`;
   }
 
   hideBoss() {

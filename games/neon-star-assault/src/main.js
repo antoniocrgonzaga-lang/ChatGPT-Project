@@ -4,7 +4,7 @@ const canvas = document.getElementById('game-canvas');
 const uiRoot = document.getElementById('ui-root');
 
 function fatal(message) {
-  uiRoot.innerHTML = `<div class="screens"><div class="screen screen-fatal in"><h2 class="bad">Erro ao iniciar</h2><p>${message}</p></div></div>`;
+  uiRoot.innerHTML = `<div class="screens"><div class="screen screen-fatal in"><h2 class="bad">Startup error</h2><p>${message}</p></div></div>`;
 }
 
 try {

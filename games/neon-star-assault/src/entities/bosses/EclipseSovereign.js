@@ -170,10 +170,10 @@ export class EclipseSovereign extends Boss {
   onPhase(n) {
     const game = this.game;
     if (n === 2) {
-      game.hud.warning('SATÉLITES DESTRUÍDOS — ATAQUE OS NÓS DO ANEL', 2.5);
+      game.hud.warning('SATELLITES DESTROYED — ATTACK THE RING NODES', 2.5);
       this.timers.sweep = 2;
     } else if (n === 3) {
-      game.hud.warning('NÚCLEO DO ECLIPSE EXPOSTO — RESISTA À GRAVIDADE!', 3);
+      game.hud.warning('ECLIPSE CORE EXPOSED — RESIST GRAVITY!', 3);
       game.audio.setMusicIntensity(2);
       game.postfx.stageBloomFactor = 1.15;
       this.timers.spiral = 2;
@@ -357,7 +357,7 @@ export class EclipseSovereign extends Boss {
       });
     }
     this.sweepEnd = this.t + SWEEP_WARN + SWEEP_FIRE;
-    this.game.hud.warning('VARREDURA DO HORIZONTE — FIQUE NO CENTRO!', 2.2);
+    this.game.hud.warning('HORIZON SWEEP — STAY IN THE CENTER!', 2.2);
     this.game.audio.play('telegraph');
   }
 

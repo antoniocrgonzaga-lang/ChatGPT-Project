@@ -330,7 +330,7 @@ export class DebugTools {
         `state ${g.state} · path ${g.rail.pathId} s=${g.rail.s.toFixed(0)} v=${g.rail.speed.toFixed(0)}\n` +
         `section ${g.stageManager.section?.id ?? '-'} · enemies ${g.enemies.active.length} · shots ${g.projectiles.playerCount}/${g.projectiles.enemyCount} · particles ${g.effects?.particles.count}\n` +
         `obstacles ${g.obstacles.list.length} · chunks ${g.stageManager.chunks.length}${this.godMode ? ' · GOD' : ''}\n` +
-        `[H] hitbox [G] god [N] seção [B] chefe [K] dano chefe [T] lento [Y] bot [1-4] estágio`,
+        `[H] hitbox [G] god [N] section [B] boss [K] boss damage [T] slow [Y] bot [1-4] stage`,
     );
   }
 }

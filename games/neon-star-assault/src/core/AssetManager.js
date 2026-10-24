@@ -39,7 +39,7 @@ export class AssetManager {
       try {
         await fn();
       } catch (err) {
-        throw new Error(`Falha ao gerar recursos (${name}): ${err.message}`);
+        throw new Error(`Failed to generate assets (${name}): ${err.message}`);
       }
       onProgress((i + 1) / steps.length, name);
       // yield so the loading bar can repaint
@@ -500,7 +500,7 @@ export class AssetManager {
           this.models.ships[id] = this.preparePlayerShip(gltf.scene, def);
         } catch (err) {
           // Keeps the game playable (e.g. when opened via file:// or the asset was moved).
-          const msg = `Modelo da nave ${ship.name} (${def.url}) não carregou — usando nave procedural.`;
+          const msg = `Ship model ${ship.name} (${def.url}) failed to load — using a procedural ship.`;
           console.warn(msg, err);
           this.warnings.push(msg);
           this.models.ships[id] = null;
@@ -528,7 +528,7 @@ export class AssetManager {
       if (Array.isArray(name)) return new THREE.Vector3(...name).applyMatrix4(root.matrixWorld);
       const node = findNode(name);
       if (!node) {
-        this.warnings.push(`Nó "${name}" ausente no modelo ${def.url}.`);
+        this.warnings.push(`Node "${name}" is missing from model ${def.url}.`);
         return null;
       }
       return node.getWorldPosition(new THREE.Vector3());
@@ -557,14 +557,14 @@ export class AssetManager {
       if (!groups.has(key)) groups.set(key, { mat, geos: [] });
       groups.get(key).geos.push(geo);
     });
-    if (!groups.size) throw new Error('GLB sem malhas');
+    if (!groups.size) throw new Error('GLB contains no meshes');
 
     const group = new THREE.Group();
     group.name = 'PlayerShipModel';
     for (const { mat, geos } of groups.values()) {
       const merged = mergeGeometries(geos, false);
       geos.forEach((g) => g.dispose());
-      if (!merged) throw new Error(`não foi possível unir malhas do material ${mat.name}`);
+      if (!merged) throw new Error(`could not merge meshes for material ${mat.name}`);
       mat.envMapIntensity = def.envMapIntensity;
       if (def.emissiveIntensity !== undefined) mat.emissiveIntensity = def.emissiveIntensity;
       // Real transmission makes three.js render the whole scene an extra time every frame;

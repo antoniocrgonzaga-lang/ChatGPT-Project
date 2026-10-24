@@ -127,7 +127,7 @@ export class Game {
     document.title = GAME_TITLE;
     this.screens.showLoading();
     if (!webglAvailable()) {
-      this.screens.showFatal('WebGL não está disponível neste navegador.');
+      this.screens.showFatal('WebGL is not available in this browser.');
       return;
     }
     try {
@@ -726,13 +726,13 @@ export class Game {
       score: this.score.score,
       subtitle: STAGES[STAGES.length - 1].victory,
       breakdown: [
-        ['Inimigos destruídos', s.kills],
-        ['Anéis atravessados', s.rings],
-        ['Formações completas', s.formations],
-        ['Danos sofridos', s.damageTaken],
-        ['Vidas restantes', this.player.lives],
-        ['Bônus de conclusão', `+${this.finalBonus ?? 0}`],
-        ['Dificuldade', this.difficulty.label],
+        ['Enemies destroyed', s.kills],
+        ['Rings cleared', s.rings],
+        ['Formations cleared', s.formations],
+        ['Hits taken', s.damageTaken],
+        ['Lives remaining', this.player.lives],
+        ['Completion bonus', `+${this.finalBonus ?? 0}`],
+        ['Difficulty', this.difficulty.label],
       ],
     };
   }
@@ -751,7 +751,7 @@ export class Game {
       if (this.enemies.resolveWave(enemy, true)) {
         this.score.stats.formations++;
         const gained = this.score.add(SCORING.formationBonus, false);
-        this.hud.toast(`FORMAÇÃO COMPLETA +${gained}`, '#6dffb0');
+        this.hud.toast(`FORMATION CLEARED +${gained}`, '#6dffb0');
         if (chance(0.5)) this.powerups.spawnAtWorld(null, enemy.object.position);
       }
       if (enemy.drop) this.powerups.spawnAtWorld(enemy.drop === true ? null : enemy.drop, enemy.object.position);
@@ -779,7 +779,7 @@ export class Game {
   onHullMilestone() {
     const p = this.player;
     if (!p.alive || !p.heal(1)) return;
-    this.hud.toast('CASCO REPARADO +1', '#6dffb0');
+    this.hud.toast('HULL REPAIRED +1', '#6dffb0');
     this.audio.play('pickup');
     this.effects.burst(p.worldPosition, { count: 20, color: 0x3dff8a, speed: 8, life: 0.5, size: 1 });
   }
@@ -789,7 +789,7 @@ export class Game {
     const p = this.player;
     if (p.lives >= PLAYER.maxLives) return;
     p.lives++;
-    this.hud.banner('VIDA EXTRA!', `${p.lives} vidas`);
+    this.hud.banner('EXTRA LIFE!', `${p.lives} lives`);
     this.audio.play('stageChange');
     this.effects.shockwave(p.worldPosition, { radius: 10, duration: 0.6, color: 0x39f0ff });
   }
@@ -797,7 +797,7 @@ export class Game {
   onRingPassed(ring) {
     this.score.stats.rings++;
     const gained = this.score.add(SCORING.ring, true);
-    this.hud.toast(`ANEL +${gained}`, '#ffc23a');
+    this.hud.toast(`RING +${gained}`, '#ffc23a');
     this.audio.play('ring');
     this.effects.shockwave(ring.center, { radius: ring.radius * 2, duration: 0.4, color: 0xffc23a });
   }
@@ -825,7 +825,7 @@ export class Game {
     this.postfx.damageFlash(1);
     this.audio.stopCharge();
     const left = this.player.lives;
-    this.hud.warning(left === 1 ? 'NAVE DESTRUÍDA — ÚLTIMA VIDA!' : `NAVE DESTRUÍDA — ${left} VIDAS RESTANTES`, 2);
+    this.hud.warning(left === 1 ? 'SHIP DESTROYED — LAST LIFE!' : `SHIP DESTROYED — ${left} LIVES REMAINING`, 2);
   }
 
   onPlayerRespawn() {
@@ -852,13 +852,13 @@ export class Game {
       if (e.alive) e.die(false);
     }
     this.obstacles.beams.releaseAll();
-    this.hud.warning('ALVO DESTRUÍDO', 2);
+    this.hud.warning('TARGET DESTROYED', 2);
   }
 
   onBossDefeated(boss) {
     this.hud.hideBoss();
     const gained = this.score.add(SCORING.stageClear, false);
-    this.hud.banner('ESTÁGIO CONCLUÍDO', `Bônus +${gained}`);
+    this.hud.banner('STAGE CLEARED', `Bonus +${gained}`);
     this.audio.setMusicIntensity(0);
     boss.dispose(); // safe mid-update: the boss only touches its own (now detached) objects afterwards
     this.boss = null;

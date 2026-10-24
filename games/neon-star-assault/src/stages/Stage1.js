@@ -262,7 +262,7 @@ function spawnGenerators({ manager, state, game }) {
     const g = manager.spawnWorldEnemy('generator', 300 + dz, x, y, {});
     if (g) g.isRouteGenerator = true;
   }
-  game.hud.warning('GERADORES DA BARREIRA DETECTADOS — DESTRUA OS 3', 3);
+  game.hud.warning('BARRIER GENERATORS DETECTED — DESTROY ALL 3', 3);
 }
 
 function buildBarrier({ game, kit, state }) {
@@ -299,7 +299,7 @@ function buildBarrier({ game, kit, state }) {
 function lockRouteDecision({ game, state }) {
   if (game.rail.decisionLocked) return;
   game.rail.chooseAlt(false);
-  if (state.generatorsKilled > 0) game.hud.toast('BARREIRA INTACTA', '#ff8a6a');
+  if (state.generatorsKilled > 0) game.hud.toast('BARRIER INTACT', '#ff8a6a');
 }
 
 // ------------------------------------------------------------------ stage definition
@@ -309,7 +309,7 @@ const ev = (at, type, extra = {}) => ({ at: S(at), type, ...extra });
 export const Stage1 = {
   id: 1,
   name: 'NEON NEBULA RUN',
-  subtitle: 'Setor 7 · Expansão Violeta',
+  subtitle: 'Sector 7 · Violet Expanse',
   seed: 1701,
   bossMusic: 'boss1',
   buildPath,
@@ -337,15 +337,15 @@ export const Stage1 = {
   },
 
   sections: [
-    { id: 'open', start: 0, end: S(1500), title: 'Espaço aberto', speed: 42, fog: 0x120828, chunk: openSpace },
-    { id: 'asteroids', start: S(1500), end: S(3000), title: 'Campo de asteroides', warning: 'CAMPO DE ASTEROIDES — DESVIE!', speed: 40, fog: 0x0e0a20, sky: { tint: 0xd8d0ff, intensity: 0.8 }, chunk: asteroidField },
-    { id: 'fleet', start: S(3000), end: S(4400), title: 'Frota interceptadora', speed: 44, fog: 0x0a0c26, dust: 0x9fc4ff, sky: { tint: 0xb8c8ff, intensity: 0.9 }, chunk: fleetZone },
-    { id: 'station', start: S(4400), end: S(5700), title: 'Destroços da Estação Lyra', speed: 40, fog: 0x0b1022, dust: 0xa8f0ff, sky: { tint: 0xc8e8ff, intensity: 0.85 }, chunk: stationDebris },
-    { id: 'rings', start: S(5700), end: S(7100), title: 'Túnel de anéis de energia', warning: 'ATRAVESSE OS ANÉIS DOURADOS', speed: 46, fog: 0x150828, dust: 0xffb0f0, bloom: 1.1, sky: { tint: 0xffd0f0, intensity: 1.1 }, chunk: ringTunnel },
-    { id: 'storm', start: S(7100), end: S(8500), title: 'Tempestade eletromagnética', warning: 'TEMPESTADE ELETROMAGNÉTICA', speed: 42, fog: 0x22103e, dust: 0xd6b0ff, bloom: 1.15, sky: { tint: 0xe0c0ff, intensity: 1.3 }, chunk: stormZone },
-    { id: 'arena', start: S(8500), end: MAIN_LENGTH + 400, title: 'Arena do Guardião', speed: 34, fog: 0x180628, sky: { tint: 0xffb8e8, intensity: 1.05 }, chunk: arenaZone },
+    { id: 'open', start: 0, end: S(1500), title: 'Open space', speed: 42, fog: 0x120828, chunk: openSpace },
+    { id: 'asteroids', start: S(1500), end: S(3000), title: 'Asteroid field', warning: 'ASTEROID FIELD — DODGE!', speed: 40, fog: 0x0e0a20, sky: { tint: 0xd8d0ff, intensity: 0.8 }, chunk: asteroidField },
+    { id: 'fleet', start: S(3000), end: S(4400), title: 'Interceptor fleet', speed: 44, fog: 0x0a0c26, dust: 0x9fc4ff, sky: { tint: 0xb8c8ff, intensity: 0.9 }, chunk: fleetZone },
+    { id: 'station', start: S(4400), end: S(5700), title: 'Lyra Station debris', speed: 40, fog: 0x0b1022, dust: 0xa8f0ff, sky: { tint: 0xc8e8ff, intensity: 0.85 }, chunk: stationDebris },
+    { id: 'rings', start: S(5700), end: S(7100), title: 'Energy ring tunnel', warning: 'FLY THROUGH THE GOLDEN RINGS', speed: 46, fog: 0x150828, dust: 0xffb0f0, bloom: 1.1, sky: { tint: 0xffd0f0, intensity: 1.1 }, chunk: ringTunnel },
+    { id: 'storm', start: S(7100), end: S(8500), title: 'Electromagnetic storm', warning: 'ELECTROMAGNETIC STORM', speed: 42, fog: 0x22103e, dust: 0xd6b0ff, bloom: 1.15, sky: { tint: 0xe0c0ff, intensity: 1.3 }, chunk: stormZone },
+    { id: 'arena', start: S(8500), end: MAIN_LENGTH + 400, title: 'Warden arena', speed: 34, fog: 0x180628, sky: { tint: 0xffb8e8, intensity: 1.05 }, chunk: arenaZone },
   ],
-  altSections: [{ id: 'relay', start: 0, end: 5000, title: 'Relé oculto', speed: 44, fog: 0x200614, dust: 0xff9a9a, bloom: 1.1, sky: { tint: 0xffb0b8, intensity: 0.8 }, chunk: hiddenRelay }],
+  altSections: [{ id: 'relay', start: 0, end: 5000, title: 'Hidden relay', speed: 44, fog: 0x200614, dust: 0xff9a9a, bloom: 1.1, sky: { tint: 0xffb0b8, intensity: 0.8 }, chunk: hiddenRelay }],
 
   events: [
     ev(0, 'music', { track: 'stage1', intensity: 1, persistent: true }),
@@ -369,11 +369,11 @@ export const Stage1 = {
     ev(2300, 'powerup', { item: 'shield', x: 0, y: -3 }),
     wave(2420, 'scout', 'column', 5, { pattern: 'dive', x: -6, y: 15 }),
     ev(2550, 'mines', { ahead: 300, list: [{ x: -4, y: 0 }, { x: 5, y: 5, dz: 25 }, { x: 9, y: -6, dz: 55 }, { x: -9, y: 6, dz: 85 }] }),
-    ev(2700, 'warning', { text: 'CORREDOR ESTREITO!' }),
+    ev(2700, 'warning', { text: 'NARROW PASSAGE!' }),
     ev(2860, 'powerup', { item: 'repair', x: 3 }),
 
     ev(2990, 'checkpoint'),
-    ev(3000, 'warning', { text: 'FROTA INTERCEPTADORA DETECTADA' }),
+    ev(3000, 'warning', { text: 'INTERCEPTOR FLEET DETECTED' }),
     ev(3050, 'enemy', { enemy: 'interceptor', opts: { entry: 'behind', side: 1 } }),
     ev(3070, 'enemy', { enemy: 'interceptor', opts: { entry: 'behind', side: -1 } }),
     ev(3090, 'enemy', { enemy: 'interceptor', opts: { entry: 'behind', side: 1 } }),
@@ -418,7 +418,7 @@ export const Stage1 = {
     ev(8200, 'custom', { run: (ctx) => energyArcs(ctx, 'h') }),
     ev(8350, 'powerup', { item: 'repair', x: 0 }),
 
-    ev(8500, 'warning', { text: 'ALERTA: ASSINATURA MASSIVA À FRENTE', duration: 3 }),
+    ev(8500, 'warning', { text: 'WARNING: MASSIVE SIGNATURE AHEAD', duration: 3 }),
     ev(8520, 'music', { intensity: 0 }),
     ev(8540, 'checkpoint'),
     ev(8600, 'boss'),
@@ -492,10 +492,10 @@ export const Stage1 = {
     if (state.generatorsKilled >= 3 && !game.rail.decisionLocked) {
       game.rail.chooseAlt(true);
       if (state.barrier) state.barrier.opening = true;
-      game.hud.warning('BARREIRA ABERTA — ROTA OCULTA LIBERADA!', 2.5);
+      game.hud.warning('BARRIER OPEN — HIDDEN ROUTE UNLOCKED!', 2.5);
       game.audio.play('stageChange');
     } else if (byPlayer) {
-      game.hud.toast(`GERADOR ${state.generatorsKilled}/3`, '#2de2ff');
+      game.hud.toast(`GENERATOR ${state.generatorsKilled}/3`, '#2de2ff');
     }
   },
 };
@@ -512,6 +512,6 @@ function energyArcs({ game }, axis) {
     const end = axis === 'h' ? f.localToWorld(45, lane, 0, new THREE.Vector3()) : f.localToWorld(lane, 35, 0, new THREE.Vector3());
     game.obstacles.fireBeam({ start, end, local: false, warn: 1.25, fire: 0.8, radius: 1.5, color: 0xb070ff });
   });
-  game.hud.warning('ARCOS ELÉTRICOS!', 1.2);
+  game.hud.warning('ELECTRIC ARCS!', 1.2);
   game.audio.play('telegraph');
 }
